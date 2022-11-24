@@ -9,3 +9,28 @@ steps:
         '-c',
         'terraform plan -no-color > plan.txt'
     ]
+   
+  - name: gcr.io/cloud-builders/gcloud
+    entrypoint: 'bash'
+    args: [
+        '-c',
+        "gcloud secrets versions access latest --secret=github-personal-token --format='get(payload.data)' | tr '_-' '/+' | base64 -d > token.txt"
+    ]
+  - name: 'gcr.io/$PROJECT_ID/github'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |-
+        read -r -d "" gh_comment_template << EOF
+        <details>
+          <summary>Terraform Plan Results</summary>
+
+          \`\`\`
+          %s
+          \`\`\`
+        </details>
+        EOF
+
+        gh_comment=$(printf "$$gh_comment_template" "$(cat plan.txt)")
+        /usr/bin/gh.bash pr review $_PR_NUMBER -R $_GITHUB_USER/$REPO_NAME -c -b "$$gh_comment"
+   
