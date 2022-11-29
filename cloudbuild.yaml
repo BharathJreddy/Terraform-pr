@@ -32,5 +32,5 @@ steps:
         EOF
 
         gh_comment=$(printf "$$gh_comment_template" "$(cat plan.txt)")
-        /usr/bin/gh.bash pr review $_PR_NUMBER -R $_GITHUB_USER/$REPO_NAME -c -b "$$gh_comment"
+
    
