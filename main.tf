@@ -3,25 +3,10 @@ provider "google" {
   region      = "${var.region}"
 }
 
-// Create a new instance
-resource "google_container_cluster" "terraform-builder-local-backend" {
-  name               = "terraform-builder-local-backend"
-  zone               = "${var.region}"
-  initial_node_count = "1"
 
-  node_config {
-    disk_size_gb  = "10"
-    oauth_scopes = [
-      "https://www.googleapis.com/auth/compute",
-      "https://www.googleapis.com/auth/devstorage.read_only",
-      "https://www.googleapis.com/auth/logging.write",
-      "https://www.googleapis.com/auth/monitoring",
-    ]
-
-    labels {
-      reason = "terraform-builder-example"
-    }
-
-    tags = ["example"]
-  }
+resource "google_artifact_registry_repository" "my-repo" {
+  location      = "us-central1"
+  repository_id = "my-repository"
+  description   = "example docker repository"
+  format        = "DOCKER"
 }
