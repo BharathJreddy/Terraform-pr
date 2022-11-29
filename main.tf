@@ -1,5 +1,5 @@
 provider "google" {
-  project     = "${var.project-name}"
+  project     = "gcp-iot-core-361019"
   region      = "${var.region}"
 }
 
