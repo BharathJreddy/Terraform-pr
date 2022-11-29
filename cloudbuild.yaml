@@ -31,6 +31,7 @@ steps:
         </details>
         EOF
 
-        gh_comment=$(printf "$$gh_comment_template" "$(cat plan.txt)")
+        gh_comment=$(printf "$$gh_comment_template" "$(cat plan.txt)") 
+        /usr/bin/gh.bash pr review $_PR_NUMBER -R 
 
    
