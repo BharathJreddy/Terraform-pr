@@ -14,7 +14,7 @@ steps:
     entrypoint: 'bash'
     args: [
         '-c',
-        "gcloud secrets versions access latest --secret=github-personal-token --format='get(payload.data)' | tr '_-' '/+' | base64 -d > token.txt"
+        "gcloud secrets versions access latest --secret=github-token --format='get(payload.data)' | tr '_-' '/+' | base64 -d > token.txt"
     ]
   - name: 'gcr.io/$PROJECT_ID/github'
     entrypoint: 'bash'
