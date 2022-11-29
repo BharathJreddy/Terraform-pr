@@ -4,4 +4,5 @@ variable "project-name" {
 
 variable "region" {
   type    = string
+  value   = us-central1
 }
